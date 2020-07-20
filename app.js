@@ -2,7 +2,7 @@
 
 var imageArticle = document.getElementById("images");
 
-var rounds = 5;
+var rounds = 25;
 
 var products = [];
 
@@ -22,11 +22,27 @@ function Image(name, path) {
     this.timesClicked = 0;
 }
 
-var one = new Image("Product 1", "img/bag.jpg")
-var two = new Image("Product 2", "img/banana.jpg")
-var three = new Image("Product 3", "img/chair.jpg")
-var four = new Image("Product 4", "img/dragon.jpg")
-var five = new Image("Product 4", "img/pen.jpg")
+ new Image("Product 1", "img/bag.jpg")
+ new Image("Product 2", "img/banana.jpg")
+ new Image("Product 3", "img/bathroom.jpg")
+ new Image("Product 4", "img/boots.jpg")
+ new Image("Product 5", "img/breakfast.jpg")
+ new Image("Product 6", "img/bubblegum.jpg")
+ new Image("Product 7", "img/chair.jpg")
+ new Image("Product 8", "img/cthulhu.jpg")
+ new Image("Product 9", "img/dog-duck.jpg")
+ new Image("Product 10", "img/dragon.jpg")
+ new Image("Product 11", "img/pen.jpg")
+ new Image("Product 12", "img/pet-sweep.jpg")
+ new Image("Product 13", "img/scissors.jpg")
+ new Image("Product 14", "img/shark.jpg")
+ new Image("Product 15", "img/sweep.png")
+ new Image("Product 16", "img/tauntaun.jpg")
+ new Image("Product 17", "img/unicorn.jpg")
+ new Image("Product 18", "img/usb.gif")
+ new Image("Product 19", "img/water-can.jpg")
+ new Image("Product 20", "img/wine-glass.jpg")
+
 
 console.log(products);
 function generateRandomnumber() {
@@ -35,8 +51,6 @@ function generateRandomnumber() {
 
 
 imageArticle.addEventListener('click', clickHandler);
-
-generateRandomPictures()
 
 function generateRandomPictures() {
     leftImageIndex = generateRandomnumber();
@@ -68,6 +82,8 @@ function generateRandomPictures() {
     products[rightImageIndex].timesShown += 1;
 
 };
+
+generateRandomPictures()
 
 
 function clickHandler() {
