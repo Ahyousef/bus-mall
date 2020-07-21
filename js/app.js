@@ -146,10 +146,43 @@ function clickHandler() {
     else {
         removeEventListener('click', clickHandler);
         renderUserMessage();
+        storeProducts();
         populateClick();
         generateChart()
+        console.table(products);
+        console.table(localStorage);
     }
 }
+
+function storeProducts(){
+    var jsonStringProducts = JSON.stringify(products);
+
+    localStorage.setItem('products',jsonStringProducts);
+}
+
+
+console.log('before parse and update');
+console.table(products);
+parseLocalStorage();
+console.log('after updating');
+console.table(products);
+
+
+function parseLocalStorage(){
+    var previousProductsArray = JSON.parse(localStorage.getItem('products'));
+
+    update(previousProductsArray);
+}
+
+function update(previousProductsArray){
+    for (let index = 0; index < products.length; index++) {
+        products[index].timesShown = previousProductsArray[index].timesShown;
+        products[index].timesClicked = previousProductsArray[index].timesClicked;
+        
+    }
+}
+
+
 var rendered = false;
 function renderUserMessage() {
     if (rendered == false) {
@@ -163,7 +196,6 @@ function renderUserMessage() {
         rendered = true;
     };
 };
-
 
 function populateClick(){
     for (let index = 0; index < products.length; index++) {
