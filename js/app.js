@@ -6,8 +6,21 @@ var rounds = 25;
 
 var products = [];
 
+var colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
+		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
+		  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+		  '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC', 
+		  '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+		  '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680', 
+		  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
+		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
+
 var productsNames = [];
 var prodcutsClicks = [];
+var productsShown = [];
+
 
 var totalClick = 0;
 
@@ -32,26 +45,26 @@ function Image(name, path) {
     productsNames.push(this.name);
 }
 
-new Image("Product 1", "img/bag.jpg")
-new Image("Product 2", "img/banana.jpg")
-new Image("Product 3", "img/bathroom.jpg")
-new Image("Product 4", "img/boots.jpg")
-new Image("Product 5", "img/breakfast.jpg")
-new Image("Product 6", "img/bubblegum.jpg")
-new Image("Product 7", "img/chair.jpg")
-new Image("Product 8", "img/cthulhu.jpg")
-new Image("Product 9", "img/dog-duck.jpg")
-new Image("Product 10", "img/dragon.jpg")
-new Image("Product 11", "img/pen.jpg")
-new Image("Product 12", "img/pet-sweep.jpg")
-new Image("Product 13", "img/scissors.jpg")
-new Image("Product 14", "img/shark.jpg")
-new Image("Product 15", "img/sweep.png")
-new Image("Product 16", "img/tauntaun.jpg")
-new Image("Product 17", "img/unicorn.jpg")
-new Image("Product 18", "img/usb.gif")
-new Image("Product 19", "img/water-can.jpg")
-new Image("Product 20", "img/wine-glass.jpg")
+new Image("bag", "img/bag.jpg")
+new Image("banana", "img/banana.jpg")
+new Image("bathroom", "img/bathroom.jpg")
+new Image("boots", "img/boots.jpg")
+new Image("breakfast", "img/breakfast.jpg")
+new Image("bubblegum", "img/bubblegum.jpg")
+new Image("chair", "img/chair.jpg")
+new Image("cthulhu", "img/cthulhu.jpg")
+new Image("dog-duck", "img/dog-duck.jpg")
+new Image("dragon", "img/dragon.jpg")
+new Image("pen", "img/pen.jpg")
+new Image("pet-sweep", "img/pet-sweep.jpg")
+new Image("scissors", "img/scissors.jpg")
+new Image("shark", "img/shark.jpg")
+new Image("sweep", "img/sweep.png")
+new Image("tauntaun", "img/tauntaun.jpg")
+new Image("unicorn", "img/unicorn.jpg")
+new Image("usb", "img/usb.gif")
+new Image("water-can", "img/water-can.jpg")
+new Image("wineglass", "img/wine-glass.jpg")
 
 
 console.log(products);
@@ -67,7 +80,7 @@ function generateRandomPictures() {
     middleImageIndex = generateRandomnumber();
     rightImageIndex = generateRandomnumber();
 
-    while (products[leftImageIndex].previous == true ) {
+    while (products[leftImageIndex].previous == true) {
         leftImageIndex = generateRandomnumber();
     };
     while (products[middleImageIndex].previous == true || leftImageIndex == middleImageIndex) {
@@ -100,7 +113,7 @@ function generateRandomPictures() {
     products[middleImageIndex].timesShown += 1;
     products[rightImageIndex].timesShown += 1;
 
-    if ( previousLeftIndex != undefined) {
+    if (previousLeftIndex != undefined) {
 
         products[previousLeftIndex].previous = false;
         products[previousmiddleIndex].previous = false;
@@ -154,10 +167,10 @@ function clickHandler() {
     }
 }
 
-function storeProducts(){
+function storeProducts() {
     var jsonStringProducts = JSON.stringify(products);
 
-    localStorage.setItem('products',jsonStringProducts);
+    localStorage.setItem('products', jsonStringProducts);
 }
 
 
@@ -168,17 +181,17 @@ console.log('after updating');
 console.table(products);
 
 
-function parseLocalStorage(){
+function parseLocalStorage() {
     var previousProductsArray = JSON.parse(localStorage.getItem('products'));
 
     update(previousProductsArray);
 }
 
-function update(previousProductsArray){
+function update(previousProductsArray) {
     for (let index = 0; index < products.length; index++) {
         products[index].timesShown = previousProductsArray[index].timesShown;
         products[index].timesClicked = previousProductsArray[index].timesClicked;
-        
+
     }
 }
 
@@ -189,57 +202,52 @@ function renderUserMessage() {
         for (let index = 0; index < products.length; index++) {
             var resultsSection = document.getElementById("results");
             var item = document.createElement("li");
-            item.innerHTML = products[index].name + " has been shown " + products[index].timesShown +
-                " times, and clicked " + products[index].timesClicked + " times."
+            item.innerHTML = products[index].name + "shown " + products[index].timesShown +
+                " times | clicked " + products[index].timesClicked + " times."
             resultsSection.append(item);
         };
         rendered = true;
     };
 };
 
-function populateClick(){
+function populateClick() {
     for (let index = 0; index < products.length; index++) {
         prodcutsClicks.push(products[index].timesClicked);
+        productsShown.push(products[index].timesShown);
     };
 };
 
 
-function generateChart(){
+function generateChart() {
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: productsNames,
-        datasets: [{
-          label: '# of Clicks',
-          data: prodcutsClicks,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 99, 132, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
+        type: 'bar',
+        data: {
+            labels: productsNames,
+            datasets: [{
+                label: '# of Clicks',
+                data: prodcutsClicks,
+                backgroundColor: colorArray,
+                borderColor: colorArray,
+                borderWidth: 1,
+            },
+        {
+                label: '# of Shown',
+                data: productsShown,
+                backgroundColor: colorArray,
+                borderColor: colorArray,
+                borderWidth: 1,
             }
-          }]
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
         }
-      }
     });
 }

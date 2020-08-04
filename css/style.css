@@ -14,28 +14,44 @@ header {
 }
 
 .results {
-    width: 200px;
+    width: 380px;
     height: 500px;
-    margin: 15px 15px 15px 15px;
+    margin: 15px 0px 15px 15px;
     float: left;
 }
 
+.results li {
+    font-size: 14px;
+}
 .results h3 {
     padding-left: 70px;
 }
 
 #images {
     display: inline;
-    margin: 15px 15px 15px 15px;
+    margin: 15px 5px 15px 5px;
 }
 
 #images img {
     width: 300px;
     height: 200px;
     margin-top: 20px;
-    border: 2px black solid;
 }
 
 .lorem {
     margin: 15px 15px 15px 15px;
+}
+
+h2 {
+    font-size: 48px;
+}
+
+table, td {
+    border: 2px black solid;
+
+}
+
+ul{
+    padding-inline-start: 20px;
+
 }
